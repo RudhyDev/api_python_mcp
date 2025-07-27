@@ -55,7 +55,7 @@ class GLPIHTTPClient:
             "Content-Type": "application/json",
             "App-Token": self.config.app_token,
         }
-        
+
         # Adiciona session token se disponível
         if self.session_token:
             headers["Session-Token"] = self.session_token
@@ -117,7 +117,7 @@ class GLPIHTTPClient:
 
         except Exception as e:
             return GLPIResponse(0, {}, f"Erro desconhecido: {str(e)}")
-        
+
         # Fallback se nenhum método corresponder
         return GLPIResponse(405, {}, "Método não suportado")
 

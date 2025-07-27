@@ -3,8 +3,10 @@ Handlers HTTP para a API.
 """
 import json
 import urllib.parse
+import os
 from http.server import BaseHTTPRequestHandler
 from src.core.glpi_use_cases import GLPITicketUseCase
+from src.interfaces.http.swagger import SwaggerGenerator
 
 
 class APIHandler(BaseHTTPRequestHandler):
@@ -85,10 +87,20 @@ class APIHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 self.send_error(500, f"Erro ao calcular progresso: {str(e)}")
 
+        elif path == "/docs" or path == "/docs/":
+            # Serve a página do Swagger UI
+            self._serve_swagger_ui()
+
+        elif path == "/api/openapi.json":
+            # Serve a especificação OpenAPI
+            self._serve_openapi_spec()
+
         elif path == "/":
             self.set_headers()
             response = {
-                "message": "API Python MCP - Clean Architecture com integração GLPI"
+                "message": "API Python MCP - Clean Architecture com integração GLPI",
+                "documentation": "/docs",
+                "openapi_spec": "/api/openapi.json",
             }
             self.wfile.write(json.dumps(response).encode())
 
@@ -215,3 +227,31 @@ class APIHandler(BaseHTTPRequestHandler):
                 self.send_error(400, "ID inválido")
         else:
             self.send_error(404, "Endpoint não encontrado")
+
+    def _serve_swagger_ui(self):
+        """Serve a página do Swagger UI."""
+        try:
+            # Lê o arquivo HTML do Swagger UI
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            html_path = os.path.join(current_dir, "swagger_ui.html")
+
+            with open(html_path, "r", encoding="utf-8") as f:
+                html_content = f.read()
+
+            self.set_headers("text/html; charset=utf-8")
+            self.wfile.write(html_content.encode("utf-8"))
+        except FileNotFoundError:
+            self.send_error(500, "Arquivo de documentação não encontrado")
+        except Exception as e:
+            self.send_error(500, f"Erro ao servir documentação: {str(e)}")
+
+    def _serve_openapi_spec(self):
+        """Serve a especificação OpenAPI em JSON."""
+        try:
+            swagger_gen = SwaggerGenerator()
+            spec_json = swagger_gen.get_json()
+
+            self.set_headers("application/json")
+            self.wfile.write(spec_json.encode("utf-8"))
+        except Exception as e:
+            self.send_error(500, f"Erro ao gerar especificação: {str(e)}")

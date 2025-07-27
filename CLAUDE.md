@@ -85,12 +85,21 @@ Variáveis de ambiente obrigatórias (copie de `.env.example`):
 
 ## Endpoints da API
 
+- `GET /` - Informações da API e links para documentação
+- `GET /docs` - Documentação Swagger UI interativa
+- `GET /api/openapi.json` - Especificação OpenAPI em JSON
+
+### Tickets
 - `GET /tickets` - Lista todos os tickets
 - `GET /tickets/{id}` - Obtém ticket específico
 - `POST /tickets` - Cria novo ticket
 - `PUT /tickets/{id}` - Atualiza ticket
 - `DELETE /tickets/{id}` - Deleta ticket
+
+### Projetos
 - `GET /projects/{tag}/progress` - Obtém progresso do projeto por tag
+
+**📖 Documentação completa disponível em `/docs`**
 
 ## Deploy
 

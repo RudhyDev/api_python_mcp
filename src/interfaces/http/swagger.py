@@ -2,7 +2,6 @@
 Gerador de documentação OpenAPI/Swagger para a API.
 """
 import json
-import yaml
 from typing import Dict, Any
 
 
@@ -454,6 +453,11 @@ class SwaggerGenerator:
 
     def get_yaml(self) -> str:
         """Retorna a especificação em formato YAML."""
-        return yaml.dump(
-            self.generate_openapi_spec(), default_flow_style=False, allow_unicode=True
-        )
+        try:
+            import yaml
+            return yaml.dump(
+                self.generate_openapi_spec(), default_flow_style=False, allow_unicode=True
+            )
+        except ImportError:
+            # Fallback para JSON se YAML não estiver disponível
+            return self.get_json()

@@ -9,13 +9,13 @@ packages = [{include = "src"}]
 [tool.poetry.dependencies]
 python = "^3.12"
 pyyaml = "^6.0.2"
+requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.4"
 black = "^23.12.1"
 flake8 = "^6.1.0"
 mypy = "^1.8.0"
-requests = "^2.31.0"
 
 [tool.poetry.scripts]
 start = "mcp_server:run"

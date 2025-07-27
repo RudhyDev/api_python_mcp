@@ -18,9 +18,9 @@ mypy = "^1.8.0"
 requests = "^2.31.0"
 
 [tool.poetry.scripts]
-start = "run_server:main"
-server = "run_server:main"
-dev = "run_server:main"
+start = "mcp_server:run"
+server = "mcp_server:run"
+dev = "mcp_server:run"
 
 [build-system]
 requires = ["poetry-core"]

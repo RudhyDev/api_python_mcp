@@ -98,15 +98,23 @@ Variáveis de ambiente obrigatórias (copie de `.env.example`):
 
 Para deploy no Railway:
 
-1. **Comando de inicialização:** `poetry run start`
-2. **Variáveis de ambiente necessárias:**
-   - `GLPI_BASE_URL`
-   - `GLPI_APP_TOKEN` 
-   - `GLPI_USER_TOKEN`
-   - `SERVER_PORT` (Railway define automaticamente via `PORT`)
+1. **Conecte seu repositório GitHub/GitLab ao Railway**
 
-3. **Configuração automática de porta:**
-   O servidor usa a variável `SERVER_PORT` ou `PORT` (Railway) automaticamente.
+2. **Configuração automática:**
+   - Railway detecta automaticamente `pyproject.toml`
+   - Usa o comando: `poetry run start` (definido no Procfile)
+   - Porta configurada automaticamente via variável `PORT`
+
+3. **Variáveis de ambiente obrigatórias no Railway:**
+   ```bash
+   GLPI_BASE_URL=https://seu-glpi-server.com/apirest.php
+   GLPI_APP_TOKEN=seu_app_token_aqui
+   GLPI_USER_TOKEN=seu_user_token_aqui
+   ```
+
+4. **Deploy automático:**
+   - Push para branch main → Deploy automático
+   - Logs disponíveis em tempo real no dashboard
 
 ### Outras plataformas
 

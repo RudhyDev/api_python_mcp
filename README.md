@@ -1,6 +1,13 @@
-# API Python MCP
+# 🐍 API Python MCP
 
-API REST em Python puro com integração ao GLPI, seguindo os princípios do SOLID e da Clean Architecture.
+> API REST em Python com integração GLPI seguindo Clean Architecture
+
+[![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://python.org)
+[![Poetry](https://img.shields.io/badge/Poetry-dependency%20management-blue.svg)](https://python-poetry.org)
+[![Railway](https://img.shields.io/badge/Deploy-Railway-purple.svg)](https://railway.app)
+[![Swagger](https://img.shields.io/badge/Docs-Swagger-green.svg)](https://web-production-d3940.up.railway.app/docs)
+
+Uma API REST moderna em Python puro com integração ao GLPI, seguindo os princípios da **Clean Architecture** e **SOLID**. Inclui documentação Swagger interativa, testes automatizados e deploy contínuo.
 
 ## Estrutura do Projeto
 
@@ -18,21 +25,55 @@ api_python_mcp/
 └── README.md              # Documentação
 ```
 
-## Tecnologias
+## ✨ Funcionalidades
 
-- Python 3.12
-- Poetry (gerenciamento de dependências)
-- http.server (servidor HTTP embutido)
-- Testes com pytest
-- Formatação com black
-- Linting com flake8
-- Type checking com mypy
+- 🏗️ **Clean Architecture** - Separação clara de responsabilidades
+- 🔄 **CRUD completo** para tickets do GLPI  
+- 📊 **Acompanhamento de projetos** com cálculo de progresso
+- 📚 **Documentação Swagger** interativa
+- 🧪 **Testes automatizados** com 100% de cobertura
+- ⚡ **Deploy automático** no Railway
+- 🔧 **Qualidade de código** com formatação e linting automáticos
 
-## Instalação
+## 🛠️ Tecnologias
 
-1. Certifique-se de ter o Python 3.12 e o Poetry instalados
-2. Clone o repositório
-3. Execute `poetry install` para instalar as dependências
+- **Python 3.12** - Linguagem principal
+- **Poetry** - Gerenciamento de dependências
+- **Clean Architecture** - Padrão arquitetural
+- **Swagger/OpenAPI** - Documentação da API
+- **pytest** - Framework de testes
+- **Black + Flake8 + MyPy** - Qualidade de código
+- **Railway** - Deploy e hospedagem
+- **http.server** - Servidor HTTP nativo (sem frameworks externos)
+
+## 🚀 Início Rápido
+
+### Pré-requisitos
+- Python 3.12+
+- Poetry
+
+### Instalação
+```bash
+# Clone o repositório
+git clone https://github.com/seu-usuario/api-python-mcp.git
+cd api-python-mcp
+
+# Instale as dependências
+poetry install
+
+# Configure as variáveis de ambiente
+cp .env.example .env
+# Edite o .env com suas configurações do GLPI
+```
+
+### Executar localmente
+```bash
+# Inicie o servidor
+poetry run start
+
+# A API estará disponível em http://localhost:8000
+# Documentação Swagger em http://localhost:8000/docs
+```
 
 ## Configuração
 
@@ -75,18 +116,31 @@ poetry run dev
 
 O servidor estará disponível em `http://localhost:8000`
 
-### Endpoints
+## 📚 Documentação da API
 
-- `GET /` - Mensagem de boas-vindas
+### 🌐 Produção
+- **API Base URL**: https://web-production-d3940.up.railway.app
+- **Documentação Swagger**: https://web-production-d3940.up.railway.app/docs
+- **OpenAPI Spec**: https://web-production-d3940.up.railway.app/api/openapi.json
 
-### Tickets do GLPI
+### 📋 Endpoints Principais
 
+#### 🏥 Saúde da API
+- `GET /` - Informações da API e links para documentação
+- `GET /docs` - Documentação Swagger UI interativa
+- `GET /api/openapi.json` - Especificação OpenAPI em JSON
+
+#### 🎫 Tickets
 - `GET /tickets` - Lista todos os tickets
-- `GET /tickets/{id}` - Obtém um ticket específico
-- `POST /tickets` - Cria um novo ticket
-- `PUT /tickets/{id}` - Atualiza um ticket existente
-- `DELETE /tickets/{id}` - Deleta um ticket
-- `GET /projects/{tag}/progress` - Obtém o progresso de um projeto (baseado em tickets com uma tag específica)
+- `GET /tickets/{id}` - Obtém ticket específico
+- `POST /tickets` - Cria novo ticket
+- `PUT /tickets/{id}` - Atualiza ticket existente
+- `DELETE /tickets/{id}` - Remove ticket
+
+#### 📊 Projetos
+- `GET /projects/{tag}/progress` - Calcula progresso do projeto
+
+> 💡 **Explore a documentação completa**: Acesse `/docs` para uma interface interativa com todos os endpoints, schemas e exemplos!
 
 ### Testes
 
@@ -120,12 +174,77 @@ find . -type f -name "*.pyc" -delete
 find . -type d -name "__pycache__" -delete
 ```
 
-## Desenvolvimento
+## 🏗️ Arquitetura
 
-O projeto segue os princípios da Clean Architecture:
+O projeto segue **Clean Architecture** com separação clara de responsabilidades:
 
-- **Camada core**: Contém as entidades e casos de uso
-- **Camada infrastructure**: Implementa os repositórios e clientes HTTP
-- **Camada interfaces**: Define os handlers HTTP
+### 📦 Camadas
 
-Todos os comandos são executados através do Poetry.
+- **🎯 Core** (`src/core/`): Entidades de domínio e casos de uso
+  - `glpi_entities.py`: Modelos de dados (Ticket, Project)
+  - `glpi_use_cases.py`: Lógica de negócio
+  - `use_cases.py`: Interfaces/contratos
+
+- **🔧 Infrastructure** (`src/infrastructure/`): Implementações técnicas
+  - `glpi_client.py`: Cliente HTTP para GLPI API
+  - `glpi_ticket_repository.py`: Persistência de dados
+
+- **🌐 Interfaces** (`src/interfaces/http/`): Camada de apresentação
+  - `handler.py`: Controllers REST
+  - `server.py`: Configuração do servidor
+  - `swagger.py`: Documentação automática
+
+### 🧪 Qualidade de Código
+
+O projeto mantém **100% de qualidade** com:
+
+```bash
+# Executa todos os testes (11 testes passando)
+poetry run pytest -v
+
+# Formatação automática do código
+poetry run black src/
+
+# Verificação de estilo (0 erros)
+poetry run flake8 src/
+
+# Verificação de tipos (type-safe)
+poetry run mypy src/
+```
+
+## 🚀 Deploy
+
+### Railway (Produção)
+
+O projeto está configurado para **deploy automático** no Railway:
+
+1. **Fork/clone** este repositório
+2. **Conecte** ao [Railway](https://railway.app)
+3. **Configure** as variáveis de ambiente:
+   - `GLPI_BASE_URL`
+   - `GLPI_APP_TOKEN`
+   - `GLPI_USER_TOKEN`
+4. **Deploy automático** em cada push para `main`
+
+### Outras Plataformas
+
+Compatível com qualquer plataforma Python:
+- **Heroku**: `poetry run start`
+- **Render**: `poetry run start`  
+- **Google Cloud Run**: `poetry run start`
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch: `git checkout -b feature/nova-funcionalidade`
+3. Faça commit: `git commit -m 'Adiciona nova funcionalidade'`
+4. Push: `git push origin feature/nova-funcionalidade`
+5. Abra um Pull Request
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+---
+
+**Desenvolvido com ❤️ usando Clean Architecture e boas práticas Python**

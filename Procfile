@@ -1,1 +1,1 @@
-web: poetry run start
+web: python mcp_server.py

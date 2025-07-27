@@ -17,10 +17,6 @@ black = "^23.12.1"
 flake8 = "^6.1.0"
 mypy = "^1.8.0"
 
-[tool.poetry.scripts]
-start = "mcp_server:run"
-server = "mcp_server:run"
-dev = "mcp_server:run"
 
 [build-system]
 requires = ["poetry-core"]
